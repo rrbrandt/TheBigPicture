@@ -7,7 +7,6 @@ import com.javasmyths.vendingmachine.errors.MakeChangeException;
 import com.javasmyths.vendingmachine.model.ServiceMachine;
 import com.javasmyths.vendingmachine.model.CoinReturn;
 import com.javasmyths.vendingmachine.model.Command;
-import com.javasmyths.vendingmachine.model.Item;
 import com.javasmyths.vendingmachine.model.MoneyIn;
 import com.javasmyths.vendingmachine.model.VendingMachine;
 import java.util.Scanner;
