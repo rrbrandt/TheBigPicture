@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VendingMachine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VendingMachine</a> &gt; <a href="index.source.html" class="el_package">com.javasmyths.vendingmachine.model</a> &gt; <span class="el_source">VendingMachine.java</span></div><h1>VendingMachine.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2018 JavaSmyths javasmyths@javasmyths.com
+ */
+package com.javasmyths.vendingmachine.model;
+
+import com.javasmyths.vendingmachine.CoinDispenser;
+import com.javasmyths.vendingmachine.errors.MakeChangeException;
+import java.util.HashMap;
+
+/**
+ * So a vending machine has some basic hardware components.  One is the current
+ * amount of money's deposited by a customer to purchase an item.  It has slots 
+ * of items, each item has a label and cost.
+ * 
+ * Scope:
+ * 1. all dollar amounts are stored as an integer and represents the number of
+ *    pennies.  
+ * 2. There can be problems that are addressed as error message they are:
+ *    2.1 Not enough money deposited to purchase item
+ *    2.2 Not enough change available to complete transaction.
+ * 
+ * @author Richard
+ */
+public class VendingMachine {
+<span class="fc" id="L25">  private CoinDispenser coinDispenser = new CoinDispenser();</span>
+  private int cashIn;
+  private int bank;
+<span class="fc" id="L28">  private static HashMap&lt;String, Item&gt; items = new HashMap();</span>
+<span class="fc" id="L29">  private static final VendingMachine vendingMachine = new VendingMachine();</span>
+
+<span class="fc" id="L31">  private VendingMachine() {</span>
+<span class="fc" id="L32">  }</span>
+  public static VendingMachine getInstance() {
+<span class="fc" id="L34">    return vendingMachine;</span>
+  }
+  
+  public int getCashIn() {
+<span class="fc" id="L38">    return cashIn;</span>
+  }
+  public void setCashIn(int cashIn) {
+<span class="fc" id="L41">    this.cashIn = cashIn;</span>
+<span class="fc" id="L42">  }</span>
+  public void addCashIn(int pennies) {
+<span class="fc" id="L44">    cashIn += pennies;</span>
+<span class="fc" id="L45">  }</span>
+  public HashMap getItems() {
+<span class="fc" id="L47">    return items;</span>
+  }
+  public void setItems(HashMap items) {
+<span class="nc" id="L50">    this.items = items;</span>
+<span class="nc" id="L51">  }</span>
+  public CoinDispenser getCoinDispenser() {
+<span class="fc" id="L53">    return coinDispenser;</span>
+  }
+  public void setCoinDispenser(CoinDispenser coinDispenser) {
+<span class="nc" id="L56">    this.coinDispenser = coinDispenser;</span>
+<span class="nc" id="L57">  }</span>
+  String makeChange(int changeRequired) throws MakeChangeException {
+<span class="fc" id="L59">    return coinDispenser.makeChange(changeRequired);</span>
+  }
+  public int getBank() {
+<span class="nc" id="L62">    return bank;</span>
+  }
+  public void setBank(int bank) {
+<span class="nc" id="L65">    this.bank = bank;</span>
+<span class="nc" id="L66">  }</span>
+  
+  public void addBank(int cents) {
+<span class="fc" id="L69">    bank += cents;</span>
+<span class="fc" id="L70">  }</span>
+
+  public void vend(String itemName) {
+<span class="fc" id="L73">    Item item = items.get(itemName);</span>
+    
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">    if (item != null) {</span>
+<span class="fc" id="L76">      item.setCount(item.getCount() - 1);</span>
+    }
+<span class="fc" id="L78">  }</span>
+  
+  @Override
+  public String toString() {
+<span class="nc" id="L82">    return &quot;VendingMachine{&quot; + &quot;coinDispenser=&quot; + coinDispenser + &quot;, cashIn=&quot; + cashIn + &quot;, bank=&quot; + bank  + &quot;, items=&quot; + items + '}';</span>
+  }
+
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

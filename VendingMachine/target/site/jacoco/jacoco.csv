@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+VendingMachine,com.javasmyths.vendingmachine.model,Denomination,14,15,0,0,5,6,3,3,3,3
+VendingMachine,com.javasmyths.vendingmachine.model,LoadedDenomination,0,28,1,1,0,8,1,5,0,5
+VendingMachine,com.javasmyths.vendingmachine.model,VendingMachine,25,64,1,1,8,20,6,11,5,11
+VendingMachine,com.javasmyths.vendingmachine.model,MoneyIn,0,13,0,0,0,5,0,2,0,2
+VendingMachine,com.javasmyths.vendingmachine.model,CoinReturn,0,23,0,0,0,6,0,2,0,2
+VendingMachine,com.javasmyths.vendingmachine.model,Item,20,70,1,1,6,20,4,6,3,6
+VendingMachine,com.javasmyths.vendingmachine.model,ServiceMachine,0,137,1,11,0,28,1,11,0,6
+VendingMachine,com.javasmyths.vendingmachine,CandyMachine,35,92,3,11,11,21,5,8,2,1
+VendingMachine,com.javasmyths.vendingmachine,CoinDispenser,2,164,2,16,1,40,2,15,0,8
+VendingMachine,com.javasmyths.vendingmachine.errors,MakeChangeException,0,4,0,0,0,2,0,1,0,1

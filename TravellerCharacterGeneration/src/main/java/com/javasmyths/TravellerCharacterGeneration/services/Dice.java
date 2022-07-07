@@ -10,6 +10,7 @@ import java.util.Random;
  * @author Richard
  */
 public class Dice {
+  public static final int MAX_DIE = 6;
   Random random;
   
   public Dice () {
@@ -17,7 +18,7 @@ public class Dice {
   }
   
   public int roleDie() {
-    return random.nextInt(6) + 1;
+    return random.nextInt(MAX_DIE) + 1;
   }
   
   public int role2Dice() {

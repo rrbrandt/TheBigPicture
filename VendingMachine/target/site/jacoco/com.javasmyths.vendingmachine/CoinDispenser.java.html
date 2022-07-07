@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CoinDispenser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VendingMachine</a> &gt; <a href="index.source.html" class="el_package">com.javasmyths.vendingmachine</a> &gt; <span class="el_source">CoinDispenser.java</span></div><h1>CoinDispenser.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2018 JavaSmyths javasmyths@javasmyths.com
+ */
+package com.javasmyths.vendingmachine;
+
+import com.javasmyths.vendingmachine.errors.MakeChangeException;
+import com.javasmyths.vendingmachine.model.Denomination;
+import com.javasmyths.vendingmachine.model.LoadedDenomination;
+import java.util.HashMap;
+import java.util.Set;
+
+/**
+ *
+ * @author Richard
+ */
+<span class="fc" id="L16">public class CoinDispenser {</span>
+
+<span class="fc" id="L18">  private HashMap&lt;String, LoadedDenomination&gt; coins = new HashMap();</span>
+
+  public HashMap getCoins() {
+<span class="fc" id="L21">    return coins;</span>
+  }
+
+  public void setCoins(HashMap coins) {
+<span class="fc" id="L25">    this.coins = coins;</span>
+<span class="fc" id="L26">  }</span>
+
+  /**
+   * @return the total amount of cash in cents loaded in coin dispenser.
+   */
+  public int getTotalCents() {
+<span class="fc" id="L32">    int cents = 0;</span>
+<span class="fc" id="L33">    Set&lt;String&gt; keys = coins.keySet();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">    for (String key : keys) {</span>
+<span class="fc" id="L35">      cents += coins.get(key).getCount() * coins.get(key).getValue();</span>
+<span class="fc" id="L36">    }</span>
+<span class="fc" id="L37">    return cents;</span>
+  }
+  /**
+   * For service, add a count of a type of coin.
+   *
+   * @param count
+   * @param denomination
+   */
+  public void loadCoin(int count, Denomination denomination) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">    if (denomination != null) {</span>
+<span class="fc" id="L47">      LoadedDenomination loadedDenomination = coins.get(denomination.getType());</span>
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">      if (loadedDenomination != null) {</span>
+<span class="fc" id="L50">        loadedDenomination.setCount(loadedDenomination.getCount() + count);</span>
+      } else {
+<span class="fc" id="L52">        loadedDenomination = new LoadedDenomination(denomination.getValue(), denomination.getType());</span>
+<span class="fc" id="L53">        loadedDenomination.setCount(count);</span>
+<span class="fc" id="L54">        coins.put(denomination.getType(), loadedDenomination);</span>
+      }
+    }
+<span class="fc" id="L57">  }</span>
+
+  /**
+   *
+   * @param type
+   */
+  public void decrementCoin(String type) {
+<span class="fc" id="L64">    LoadedDenomination loadedDenomination = coins.get(type);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">    if (loadedDenomination != null) {</span>
+<span class="nc" id="L66">      loadedDenomination.dispense();</span>
+    }
+<span class="fc" id="L68">  }</span>
+
+  public String makeChange(int changeRequired) throws MakeChangeException {
+<span class="fc" id="L71">    StringBuilder stringBuilder = new StringBuilder(&quot;&quot;);</span>
+
+<span class="fc bfc" id="L73" title="All 2 branches covered.">    if (changeRequired &gt; getTotalCents()) {</span>
+<span class="fc" id="L74">      throw new MakeChangeException (&quot;Transaction aborted, not enough change.&quot;);</span>
+    }
+<span class="fc bfc" id="L76" title="All 2 branches covered.">    while (changeRequired &gt; 0) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">      if (changeRequired &gt;= 25) {</span>
+<span class="fc" id="L78">        stringBuilder.append(&quot;Q &quot;);</span>
+<span class="fc" id="L79">        changeRequired -= 25;</span>
+<span class="fc" id="L80">        coins.get(&quot;Q&quot;).dispense();</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">      } else if (changeRequired &gt;= 10) {</span>
+<span class="fc" id="L82">        stringBuilder.append(&quot;D &quot;);</span>
+<span class="fc" id="L83">        changeRequired -= 10;</span>
+<span class="fc" id="L84">        coins.get(&quot;D&quot;).dispense();</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">      } else if (changeRequired &gt;= 5) {</span>
+<span class="fc" id="L86">        stringBuilder.append(&quot;N &quot;);</span>
+<span class="fc" id="L87">        changeRequired -= 10;</span>
+<span class="fc" id="L88">        coins.get(&quot;N&quot;).dispense();</span>
+      }
+    }
+
+<span class="fc" id="L92">    return stringBuilder.toString();</span>
+
+  }
+
+  @Override
+  public String toString() {
+<span class="fc" id="L98">    return &quot;CoinDispenser{&quot; + &quot;coins=&quot; + coins + '}';</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -2,12 +2,18 @@
 <html xmlns:th="https://www.thymeleaf.org">
   <head> 
     <style>
-      table, th, td {
-        border: 1px solid;
-        cellspacing: 4;
+      table {
+        border-collapse: collapse;
+      }
+      th, td {
+        border: 2px solid black;
+        padding: 4px;
       }
       .mods {
-        font-size: 75%;
+        font-size: 60%;
+      }
+      .buttons {
+        font-size: 60%;
       }
     </style>
     <title>Select Service</title>
@@ -27,7 +33,7 @@
       Social Standing: <input type="text" th:field="*{characteristics.socialStanding}" width="16"/><br /><br />
       <h4><underline> Select Service:</underline></h4>
       <table>
-        <tr><th></th><th>Navy</th><th>Marines</th><th>Army</th><th>Scouts</th><th>Merchants</th><th>Other</th></tr>
+        <tr><th style="border-style:none"></th><th>Navy</th><th>Marines</th><th>Army</th><th>Scouts</th><th>Merchants</th><th>Other</th></tr>
         <tr><td>Enlistment</td><td>8+</td><td>9+</td><td>5+</td><td>7+</td><td>7+</td><td>3+</td></tr>
         <tr class="mods"><td>DM of +1 if</td><td>Intel 8+</td><td>Intel 8+</td><td>Dext 6+</td><td>Intel 6+</td><td>Stren 7+</td><td>-</td></tr>
         <tr class="mods"><td>DM of +2 if</td><td>Educ 9+</td><td>Stren 8+</td><td>Endur 5+</td><td>Stren 8+</td><td>Intel 8+</td><td>-</td></tr>
@@ -38,9 +44,16 @@
         <tr class="mods"><td>DM of +1 if</td><td>Social 9+</td><td>Educ 7+</td><td>Endur 7+</td><td>-</td><td>Intel 9+</td><td>-</td></tr>
         <tr><td>Promotion</td><td>8+</td><td>9+</td><td>6+</td><td>-</td><td>10+</td><td>-</td></tr>
         <tr class="mods"><td>DM of +1 if</td><td>Educ 8+</td><td>Social 8+</td><td>Educ 7+</td><td>Endur 9+</td><td>Intel 9+</td><td>-</td></tr>
+        <tr>
+          <td style="border-style:none"></td>
+          <td><input type="submit" name="acceptNavy" value="accept" class="buttons"/> <br /><input type="submit" name="attemptNavy" value="attempt" class="buttons"/><br /></td>
+          <td><input type="submit" name="acceptMarines" value="accept" class="buttons"/> <br /><input type="submit" name="attemptMarines" value="attempt" class="buttons"/><br /></td>
+          <td><input type="submit" name="acceptArmy" value="accept" class="buttons"/> <br /><input type="submit" name="attemptArmy" value="attempt" class="buttons"/><br /></td>
+          <td><input type="submit" name="acceptScouts" value="accept" class="buttons"/> <br /><input type="submit" name="attemptScouts" value="attempt" class="buttons"/><br /></td>
+          <td><input type="submit" name="acceptMerchants" value="accept" class="buttons"/> <br /><input type="submit" name="attemptMerchants" value="attempt" class="buttons"/><br /></td>
+          <td><input type="submit" name="acceptOther" value="accept" class="buttons"/> <br /><input type="submit" name="attemptOther" value="attempt" class="buttons"/><br /></td>
+        </tr>
       </table> 
-
-      <input type="submit" name="Submit" value="Submit" /> <input type="submit" name="ReRoll" value="ReRoll" /><br />
     </form>
   </body>
 </html>

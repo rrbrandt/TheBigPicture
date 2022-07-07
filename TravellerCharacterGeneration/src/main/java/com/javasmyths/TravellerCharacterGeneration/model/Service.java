@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2018 JavaSmyths javasmyths@javasmyths.com
  */
-package com.javasmyths.travellercharactergeneration.model;
+package com.javasmyths.TravellerCharacterGeneration.model;
 
 /**
  *

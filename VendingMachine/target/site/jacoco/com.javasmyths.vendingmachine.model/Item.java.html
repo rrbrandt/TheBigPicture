@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Item.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VendingMachine</a> &gt; <a href="index.source.html" class="el_package">com.javasmyths.vendingmachine.model</a> &gt; <span class="el_source">Item.java</span></div><h1>Item.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (C) 2018 JavaSmyths javasmyths@javasmyths.com
+ */
+package com.javasmyths.vendingmachine.model;
+
+import com.javasmyths.vendingmachine.errors.MakeChangeException;
+
+/**
+ * So an Item has a name and a price. All prices are stored as an integer and
+ * represents the number of pennies.
+ *
+ * @author Richard
+ */
+public class Item implements Command {
+
+  private String name;
+  private int cost;
+  private int count;
+  
+<span class="fc" id="L20">  public Item(String name, int cost, int count) {</span>
+<span class="fc" id="L21">    this.name = name;</span>
+<span class="fc" id="L22">    this.cost = cost;</span>
+<span class="fc" id="L23">    this.count = count;</span>
+<span class="fc" id="L24">  }</span>
+
+  public String getName() {
+<span class="fc" id="L27">    return name;</span>
+  }
+
+  public void setName(String name) {
+<span class="nc" id="L31">    this.name = name;</span>
+<span class="nc" id="L32">  }</span>
+
+  public int getCost() {
+<span class="fc" id="L35">    return cost;</span>
+  }
+
+  public void setCost(int cost) {
+<span class="nc" id="L39">    this.cost = cost;</span>
+<span class="nc" id="L40">  }</span>
+
+
+  public int getCount() {
+<span class="fc" id="L44">    return count;</span>
+  }
+
+  public void setCount(int count) {
+<span class="fc" id="L48">    this.count = count;</span>
+<span class="fc" id="L49">  }</span>
+
+  @Override
+  public String toString() {
+<span class="nc" id="L53">    return &quot;Item{&quot; + &quot;name=&quot; + name + &quot;, cost=&quot; + cost + &quot;, count=&quot; + count + '}';</span>
+  }
+
+  @Override
+  public String execute() throws MakeChangeException {
+<span class="fc" id="L58">    StringBuilder stringBuilder = new StringBuilder(&quot;&quot;);</span>
+<span class="fc" id="L59">    VendingMachine vendingMachine = VendingMachine.getInstance();</span>
+<span class="fc" id="L60">    int cashIn = vendingMachine.getCashIn();</span>
+    
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">    if (cashIn &gt;= getCost()) {</span>
+<span class="fc" id="L63">      stringBuilder.append(getName()).append(&quot; &quot;);</span>
+<span class="fc" id="L64">      stringBuilder.append(vendingMachine.makeChange(cashIn - getCost()));</span>
+<span class="fc" id="L65">      vendingMachine.setCashIn(0);</span>
+<span class="fc" id="L66">      vendingMachine.addBank(getCost());</span>
+<span class="fc" id="L67">      vendingMachine.vend(name);</span>
+    } else {
+<span class="nc" id="L69">      stringBuilder.append(&quot;Error, not enough money in for item.&quot;);</span>
+    }
+    
+<span class="fc" id="L72">    return stringBuilder.toString();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

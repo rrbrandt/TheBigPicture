@@ -1,0 +1,8 @@
+SERVICE Q-1, D-1, N-1
+SERVICE PUT-A-65-30 PUT-B-100-15 PUT-C-150-10
+Q, Q, Q, Q, GET-A
+-> A Q D 
+Q, Q, Q, Q, GET-A
+-> A Transaction aborted, not enough change.
+
+

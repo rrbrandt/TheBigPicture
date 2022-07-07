@@ -1,0 +1,11 @@
+com\javasmyths\vendingmachine\CoinDispenser.class
+com\javasmyths\vendingmachine\model\Command.class
+com\javasmyths\vendingmachine\model\Item.class
+com\javasmyths\vendingmachine\model\Denomination.class
+com\javasmyths\vendingmachine\model\LoadedDenomination.class
+com\javasmyths\vendingmachine\errors\MakeChangeException.class
+com\javasmyths\vendingmachine\model\VendingMachine.class
+com\javasmyths\vendingmachine\CandyMachine.class
+com\javasmyths\vendingmachine\model\MoneyIn.class
+com\javasmyths\vendingmachine\model\CoinReturn.class
+com\javasmyths\vendingmachine\model\ServiceMachine.class
