@@ -3,6 +3,8 @@
  */
 package com.javasmyths.travellercharactergeneration.model;
 
+import com.javasmyths.TravellerCharacterGeneration.model.Service;
+
 /**
  *
  * @author Richard
@@ -12,8 +14,7 @@ public class TravellerCharacter {
   private String Name;
   private Characteristics characteristics;
   private int age;
-  
-
+  private Service service;
   public TravellerCharacter() {
   }
 
@@ -45,9 +46,18 @@ public class TravellerCharacter {
     this.Name = Name;
   }
 
-  @Override
-  public String toString() {
-    return "TravellerCharacter{" + "Name=" + Name + ", age=" + age + ", characteristics=" + characteristics + '}';
+  public Service getService() {
+    return service;
   }
 
+  public void setService(Service service) {
+    this.service = service;
+  }
+
+  @Override
+  public String toString() {
+    return "TravellerCharacter{" + "Name=" + Name + ", characteristics=" + characteristics + ", age=" + age + ", service=" + service + '}';
+  }
+
+  
 }

@@ -17,10 +17,16 @@ public class Dice {
     random = new Random();
   }
   
+  /**
+   * @return random from 1..6
+   */
   public int roleDie() {
     return random.nextInt(MAX_DIE) + 1;
   }
   
+  /**
+   * @return random from 2..12, as roleDie() + roleDie()
+   */
   public int role2Dice() {
     return roleDie() + roleDie();
   }

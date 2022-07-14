@@ -20,7 +20,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
   <body>
-    <form action="#" th:action="@{/characteristics}" th:object="${character}" method="post">
+    <form action="#" th:action="@{/selectservice}" th:object="${character}" method="post">
       <h4><underline>Character:</underline></h4>
       Name: <input type="text" th:field="*{name}" /><br />
       Age: <input type="text" th:field="*{age}" /><br />
@@ -45,15 +45,18 @@
         <tr><td>Promotion</td><td>8+</td><td>9+</td><td>6+</td><td>-</td><td>10+</td><td>-</td></tr>
         <tr class="mods"><td>DM of +1 if</td><td>Educ 8+</td><td>Social 8+</td><td>Educ 7+</td><td>Endur 9+</td><td>Intel 9+</td><td>-</td></tr>
         <tr>
-          <td style="border-style:none"></td>
-          <td><input type="submit" name="acceptNavy" value="accept" class="buttons"/> <br /><input type="submit" name="attemptNavy" value="attempt" class="buttons"/><br /></td>
-          <td><input type="submit" name="acceptMarines" value="accept" class="buttons"/> <br /><input type="submit" name="attemptMarines" value="attempt" class="buttons"/><br /></td>
-          <td><input type="submit" name="acceptArmy" value="accept" class="buttons"/> <br /><input type="submit" name="attemptArmy" value="attempt" class="buttons"/><br /></td>
-          <td><input type="submit" name="acceptScouts" value="accept" class="buttons"/> <br /><input type="submit" name="attemptScouts" value="attempt" class="buttons"/><br /></td>
-          <td><input type="submit" name="acceptMerchants" value="accept" class="buttons"/> <br /><input type="submit" name="attemptMerchants" value="attempt" class="buttons"/><br /></td>
-          <td><input type="submit" name="acceptOther" value="accept" class="buttons"/> <br /><input type="submit" name="attemptOther" value="attempt" class="buttons"/><br /></td>
+          <td style="border-style:none">select</td>
+          <td><input type="radio" id="Navy" name="selectService" value="Navy"></td>
+          <td><input type="radio" id="Marines" name="selectService" value="Marines"></td>
+          <td><input type="radio" id="Army" name="selectService" value="Army"></td>
+          <td><input type="radio" id="Scouts" name="selectService" value="Scouts"></td>
+          <td><input type="radio" id="Merchants" name="selectService" value="Merchants"></td>
+          <td><input type="radio" id="Other" name="selectService" value="Other"></td>
         </tr>
       </table> 
+      <input type="submit" name="accept" value="accept" class="buttons"/><input type="submit" name="attempt" value="attempt" class="buttons"/>
     </form>
+
+    <p th:text="${result}" />
   </body>
 </html>
