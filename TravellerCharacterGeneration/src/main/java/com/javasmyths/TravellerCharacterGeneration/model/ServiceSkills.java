@@ -34,7 +34,34 @@ public class ServiceSkills {
       new RolableSkills [] {RolableSkills.Vehicle,RolableSkills.Mechanical,RolableSkills.Electronics,RolableSkills.Tactics,RolableSkills.BladeCbt,RolableSkills.GunCbt},
       new RolableSkills [] {RolableSkills.Medical,RolableSkills.Tactics,RolableSkills.Tactics,RolableSkills.Computer,RolableSkills.Leader,RolableSkills.Admin}
     ));
+    
+    skillsForService.put(Service.Merchants, new SkillsForService(
+      new RolableSkills [] {RolableSkills.PLUS_STREN,RolableSkills.PLUS_DEXT,RolableSkills.PLUS_ENDUR,RolableSkills.PLUS_STREN,RolableSkills.BladeCbt,RolableSkills.Bribery},
+      new RolableSkills [] {RolableSkills.Vehicle,RolableSkills.VaccSuit,RolableSkills.JackOT,RolableSkills.Steward,RolableSkills.Electronics,RolableSkills.GunCbt},
+      new RolableSkills [] {RolableSkills.Streetwise,RolableSkills.Mechanical,RolableSkills.Electronics,RolableSkills.Navigation,RolableSkills.Gunnery,RolableSkills.Medical},
+      new RolableSkills [] {RolableSkills.Medical,RolableSkills.Navigation,RolableSkills.Engineering,RolableSkills.Computer,RolableSkills.Pilot,RolableSkills.Admin}
+    ));
+    
+    skillsForService.put(Service.Scouts, new SkillsForService(
+      new RolableSkills [] {RolableSkills.PLUS_STREN,RolableSkills.PLUS_DEXT,RolableSkills.PLUS_ENDUR,RolableSkills.PLUS_INTEL,RolableSkills.PLUS_EDUC,RolableSkills.GunCbt},
+      new RolableSkills [] {RolableSkills.Vehicle,RolableSkills.VaccSuit,RolableSkills.Mechanical,RolableSkills.Navigation,RolableSkills.Electronics,RolableSkills.JackOT},
+      new RolableSkills [] {RolableSkills.Vehicle,RolableSkills.Mechanical,RolableSkills.Electronics,RolableSkills.JackOT,RolableSkills.Gunnery,RolableSkills.Medical},
+      new RolableSkills [] {RolableSkills.Medical,RolableSkills.Navigation,RolableSkills.Engineering,RolableSkills.Computer,RolableSkills.Pilot,RolableSkills.JackOT}
+    ));
+    
+    skillsForService.put(Service.Other, new SkillsForService(
+      new RolableSkills [] {RolableSkills.PLUS_STREN,RolableSkills.PLUS_DEXT,RolableSkills.PLUS_ENDUR,RolableSkills.BladeCbt,RolableSkills.Brawling,RolableSkills.MINUS_SOCIAL},
+      new RolableSkills [] {RolableSkills.Vehicle,RolableSkills.Gambling,RolableSkills.Brawling,RolableSkills.Bribery,RolableSkills.BladeCbt,RolableSkills.GunCbt},
+      new RolableSkills [] {RolableSkills.Streetwise,RolableSkills.Mechanical,RolableSkills.Electronics,RolableSkills.Gambling,RolableSkills.Brawling,RolableSkills.Forgery},
+      new RolableSkills [] {RolableSkills.Medical,RolableSkills.Forgery,RolableSkills.Electronics,RolableSkills.Computer,RolableSkills.Streetwise,RolableSkills.JackOT}
+    ));
   }
-  
-  
+
+  public HashMap<Service, SkillsForService> getSkillsForService() {
+    return skillsForService;
+  }
+
+  public void setSkillsForService(HashMap<Service, SkillsForService> skillsForService) {
+    this.skillsForService = skillsForService;
+  }
 }

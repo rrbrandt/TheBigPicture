@@ -2,6 +2,7 @@ package com.javasmyths.TravellerCharacterGeneration.handlingformsubmission;
 
 import com.javasmyths.travellercharactergeneration.model.Characteristics;
 import com.javasmyths.travellercharactergeneration.model.TravellerCharacter;
+import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class CharacterController {
+  @Resource(name = "TravellerCharacter")
+  TravellerCharacter travellerCharacter;
 
   @GetMapping("/newcharacter")
   public String greetingForm(Model model) {
     System.out.println("****************************************");
     System.out.println("newcharacter - get");
     System.out.println("****************************************");
-    model.addAttribute("character", new TravellerCharacter(18));
+    if (travellerCharacter == null) {
+      travellerCharacter = new TravellerCharacter();
+    }
+    model.addAttribute("character", travellerCharacter);
     System.out.println("Character: " + model.getAttribute("character"));
     return "newcharacter";
   }
@@ -26,6 +32,9 @@ public class CharacterController {
     System.out.println("****************************************");
     System.out.println("newcharacter - post");
     System.out.println("****************************************");
+    if (travellerCharacter == null) {
+      travellerCharacter = new TravellerCharacter();
+    }
     model.addAttribute("character", character);
     Characteristics characteristic = new Characteristics();
     character.setCharacteristics(characteristic);

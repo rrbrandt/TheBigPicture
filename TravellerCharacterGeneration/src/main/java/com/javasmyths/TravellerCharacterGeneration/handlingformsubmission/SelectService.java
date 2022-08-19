@@ -1,10 +1,14 @@
 package com.javasmyths.TravellerCharacterGeneration.handlingformsubmission;
 
 import com.javasmyths.TravellerCharacterGeneration.model.Service;
+import com.javasmyths.TravellerCharacterGeneration.model.ServiceSkills;
+import com.javasmyths.TravellerCharacterGeneration.model.Skills;
+import com.javasmyths.TravellerCharacterGeneration.model.SkillsForService;
 import com.javasmyths.TravellerCharacterGeneration.services.CharacterServices;
 import com.javasmyths.TravellerCharacterGeneration.services.Dice;
-import com.javasmyths.travellercharactergeneration.model.Characteristics;
 import com.javasmyths.travellercharactergeneration.model.TravellerCharacter;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +38,25 @@ public class SelectService {
     System.out.println("****************************************");
     System.out.println("selectservice - post");
     System.out.println("****************************************");
-    model.addAttribute("character", character);
     System.out.println("Character: " + character);
-    return "selectservice";
+    List<Skills> skills = new ArrayList();
+    
+    ServiceSkills serviceSkills = new ServiceSkills();
+    SkillsForService skillsForService = serviceSkills.getSkillsForService().get(character.getService());
+    
+    for (int i = 0; i < 6; i++) {
+      skills.add(new Skills(String.valueOf(i), 
+              (skillsForService.getPersonalDevelopment())[i].toString(),  
+              (skillsForService.getServiceSkills())[i].toString(),
+              (skillsForService.getAdvancedEducation())[i].toString(),
+              (skillsForService.getAdvancedEducationPlusEduc())[i].toString())
+      );
+    }
+    model.addAttribute("skills", skills);
+    model.addAttribute("acceptButton", "hidden");
+    model.addAttribute("attemptButton", "display");
+    model.addAttribute("continueButton", "hidden");
+    return "selectskills";
   }
 
   @RequestMapping(value = "/selectservice", method = RequestMethod.POST, params = "attempt")
@@ -46,7 +66,6 @@ public class SelectService {
     System.out.println("selectservice - attempt   selectService = " + selectService);
     System.out.println("****************************************");
     System.out.println("Character: " + character);
-    model.addAttribute("character", character);
     Service service = Service.valueOf(selectService);
 
     System.out.println("Attemting " + service);
@@ -82,20 +101,27 @@ public class SelectService {
         break;
     }
 
-    System.out.println("Your chance to enter the " + service + " is " + success + " on 2D6");
+    StringBuilder sb = new StringBuilder("Your chance to enter the " + service + " is " + success + " on 2D6 \n <br />");
     int diceRole = dice.role2Dice();
 
     if (diceRole >= success) {
-      System.out.println("Your rolled a " + diceRole + ".  You made it! you are now in the " + service);
-      model.addAttribute("result", "Your rolled a " + diceRole + ".  You made it! you are now in the " + service);
+      sb.append("Your rolled a ").append(diceRole).append(".  You made it! you are now in the ").append(service);
     } else {
       service = CharacterServices.draftService();
-      System.out.println("Your rolled a " + diceRole + ".  that was a fail.  You have been drafted into the " + service + ".");
+      sb.append("Your rolled a ").append(diceRole).append(".  that was a fail.  You have been drafted into the ").append(service).append(".");
       model.addAttribute("result", "Your rolled a " + diceRole + ".  that was a fail.  You have been drafted into the " + service + ".");
     }
-
+    
+    model.addAttribute("result", sb.toString());
+    System.out.println(sb);
     character.setService(service);
 
+    model.addAttribute("acceptButton", "hidden");
+    model.addAttribute("attemptButton", "hidden");
+    model.addAttribute("continueButton", "display");
+
+    model.addAttribute("character", character);
+    System.out.println("Character: " + character);
     return "selectservice";
   }
 

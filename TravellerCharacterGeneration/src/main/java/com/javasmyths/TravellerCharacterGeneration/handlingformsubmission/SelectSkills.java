@@ -1,8 +1,10 @@
 package com.javasmyths.TravellerCharacterGeneration.handlingformsubmission;
 
+import com.javasmyths.TravellerCharacterGeneration.model.Service;
+import com.javasmyths.TravellerCharacterGeneration.services.CharacterServices;
+import com.javasmyths.TravellerCharacterGeneration.services.Dice;
 import com.javasmyths.travellercharactergeneration.model.Characteristics;
 import com.javasmyths.travellercharactergeneration.model.TravellerCharacter;
-import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,44 +12,42 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class CharacteristcsController {
-  @Resource(name = "TravellerCharacter")
-  TravellerCharacter travellerCharacter;
+public class SelectSkills {
 
-  @GetMapping("/characteristics")
+  Dice dice = new Dice();
+
+  @GetMapping("/selectskills")
   public String greetingForm(@ModelAttribute TravellerCharacter character, Model model) {
     System.out.println("****************************************");
-    System.out.println("characteristics - get");
+    System.out.println("selectskills - get");
     System.out.println("****************************************");
-    System.out.println("Character: " + travellerCharacter);
-    travellerCharacter.setCharacteristics(new Characteristics());
-    model.addAttribute("character", travellerCharacter);
-    return "characteristics";
-  }
-
-  @PostMapping("/characteristics")
-  public String greetingSubmit(@ModelAttribute TravellerCharacter character, Model model) {
-    System.out.println("****************************************");
-    System.out.println("characteristics - post");
-    System.out.println("****************************************");
-    System.out.println("Character: " + travellerCharacter);
-    model.addAttribute("acceptButton", "display");
-    model.addAttribute("attemptButton", "display");
-    model.addAttribute("continueButton", "hidden");
+    model.addAttribute("character", character);
+    System.out.println("Character: " + model.getAttribute("character"));
     return "selectservice";
   }
 
-  @RequestMapping(value = "/characteristics", method = RequestMethod.POST, params = "ReRoll")
-  public String reroll(@ModelAttribute TravellerCharacter character, Model model) {
+  @PostMapping("/selectskills")
+  public String greetingSubmit(@ModelAttribute TravellerCharacter character, Model model) {
     System.out.println("****************************************");
-    System.out.println("characteristics - ReRoll");
+    System.out.println("selectskills - post");
     System.out.println("****************************************");
-    Characteristics characteristics = new Characteristics();
-    travellerCharacter.setCharacteristics(characteristics);
+    model.addAttribute("character", character);
     System.out.println("Character: " + character);
-    return "characteristics";
+    return "selectskills";
+  }
+
+  @RequestMapping(value = "/selectskills", method = RequestMethod.POST, params = "attempt")
+  public String reroll(@ModelAttribute TravellerCharacter character, Model model,
+          @RequestParam("selectService") String selectService) {
+    System.out.println("****************************************");
+    System.out.println("selectservice - attempt   selectService = " + selectService);
+    System.out.println("****************************************");
+    System.out.println("Character: " + character);
+    model.addAttribute("character", character);
+    return "selectskills";
   }
 
 }

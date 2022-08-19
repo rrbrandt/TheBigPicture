@@ -4,17 +4,25 @@
 package com.javasmyths.travellercharactergeneration.model;
 
 import com.javasmyths.TravellerCharacterGeneration.model.Service;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  *
  * @author Richard
  */
+@Component
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class TravellerCharacter {
   
   private String Name;
   private Characteristics characteristics;
   private int age;
   private Service service;
+  
   public TravellerCharacter() {
   }
 

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head> 
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      th, td {
+        border: 2px solid black;
+        padding: 4px;
+      }
+      .mods {
+        font-size: 60%;
+      }
+      .buttons {
+        font-size: 60%;
+      }
+    </style>
+    <title>Select Service</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <form action="#" th:action="@{/selectservice}" th:object="${character}" method="post">
+      <h4><underline>Character:</underline></h4>
+      Name: <input type="text" th:field="*{name}" /><br />
+      Age: <input type="text" th:field="*{age}" /><br />
+      <h4><underline> Characteristics:</underline></h4>
+      Strength: <input type="text" th:field="*{characteristics.strength}" width="16"/><br />
+      Dexterity: <input type="text" th:field="*{characteristics.dexterity}" width="16"/><br />
+      Endurance: <input type="text" th:field="*{characteristics.endurance}"  width="16"/><br />
+      Intelligence: <input type="text" th:field="*{characteristics.intelligence}" width="16"/><br />
+      Education: <input type="text" th:field="*{characteristics.education}" width="16"/><br />
+      Social Standing: <input type="text" th:field="*{characteristics.socialStanding}" width="16"/><br /><br />
+      <h4><underline> Select Service:</underline></h4>
+      <table>
+        <tr><th>Die Role</th><th>Personal<br>Development</th><th>Service<br>Skills</th><th>Advance<br>Education</th><th>Advance Education<br>Education + 8</th></tr>
+        <tr th:each="skill : ${skills}">
+          <td th:text="${skill.dieRole}">Die Role</td>
+          <td th:text="${skill.personalDevelopment}">personalDevelopment</td>
+          <td th:text="${skill.serviceSkills}">serviceSkills</td>
+          <td th:text="${skill.advanceEducation}">advanceEducation</td>
+          <td th:text="${skill.advanceEducationPlus}">advanceEducationPlus</td>
+        </tr>
+        <tr>
+          <td style="border-style:none">select</td>
+          <td><input type="radio" id="PersonalDevelopment" name="selectSkillTable" value="PersonalDevelopment"></td>
+          <td><input type="radio" id="ServiceSkills" name="selectSkillTable" value="ServiceSkills"></td>
+          <td><input type="radio" id="AdvanceEducation" name="selectSkillTable" value="AdvanceEducation"></td>
+          <td><input type="radio" id="AdvanceEducationPlus" name="selectSkillTable" value="AdvanceEducationPlus"></td>
+        </tr>
+      </table> 
+      <input type="submit" name="attempt" value="attempt" class="buttons" th:hidden="${attemptButton eq 'hidden'}" /> <br>
+      <p th:utext="${result}"/>
+      <input type="submit" name="continue" value="continue" class="buttons" th:hidden="${continueButton eq 'hidden'}"/>
+    </form>
+  </body>
+</html>
