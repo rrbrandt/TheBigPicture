@@ -9,7 +9,7 @@ import java.util.Date;
  *
  * @author Richard
  */
-public class RentalAgreement extends GsonString {
+public class RentalAgreement {
 
   private Tool tool;
   private long rentalDays;
@@ -95,7 +95,15 @@ public class RentalAgreement extends GsonString {
 
   @Override
   public String toString() {
-    return toGsonString();
+    return "RentalAgreement{" + "tool=" + tool + 
+            "\n rentalDays=" + rentalDays + 
+            "\n checkOutDate=" + checkOutDate + 
+            "\n dueDate=" + dueDate + 
+            "\n preDiscountCharge=" + preDiscountCharge + 
+            "\n discountPercent=" + discountPercent + 
+            "\n discountAmount=" + discountAmount + 
+            "\n finalCharge=" + finalCharge + '}';
   }
-  
+
+
 }
