@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+  
+    <context:annotation-config/>
+    
+    <bean id="chainsawStihl" class="com.javasmyths.rb0822.model.Tool">
+      <constructor-arg index="0" value="CHNS"/>
+      <constructor-arg index="1" value="Chainsaw"/>
+      <constructor-arg index="2" value="Stihl"/>
+      <constructor-arg index="3" value="149"/>
+      <constructor-arg index="4" value="true"/>
+      <constructor-arg index="5" value="false"/>
+      <constructor-arg index="6" value="true"/>
+    </bean>
+    
+    <bean id="ladderWarner" class="com.javasmyths.rb0822.model.Tool">
+      <constructor-arg index="0" value="LADW"/>
+      <constructor-arg index="1" value="Ladder"/>
+      <constructor-arg index="2" value="Werner"/>
+      <constructor-arg index="3" value="199"/>
+      <constructor-arg index="4" value="true"/>
+      <constructor-arg index="5" value="true"/>
+      <constructor-arg index="6" value="false"/>
+    </bean>
+    
+    <bean id="config" class="com.javasmyths.rb0822.model.ApplicationConfig" scope="singleton">
+      <property name="tools"> 
+        <map>
+          <entry key="CHNS" value-ref="chainsawStihl"/>
+          <entry key="LADW" value-ref="ladderWarner"/>
+        </map>
+      </property>
+    </bean>
+
+
+  <bean id="toolServices" class="com.javasmyths.rb0822.ToolServices"/>
+</beans> 
