@@ -3,7 +3,11 @@
  */
 package com.javasmyths.rb0822.model;
 
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -42,7 +46,6 @@ public class RentalAgreement {
   public void setDiscountPercent(long discountPercent) {
     this.discountPercent = discountPercent;
   }
-  
 
   public long getPreDiscountCharge() {
     return preDiscountCharge;
@@ -67,7 +70,6 @@ public class RentalAgreement {
   public void setCheckOutDate(Date checkOutDate) {
     this.checkOutDate = checkOutDate;
   }
-  
 
   public long getRentalDays() {
     return rentalDays;
@@ -95,15 +97,30 @@ public class RentalAgreement {
 
   @Override
   public String toString() {
-    return "RentalAgreement{" + "tool=" + tool + 
-            "\n rentalDays=" + rentalDays + 
-            "\n checkOutDate=" + checkOutDate + 
-            "\n dueDate=" + dueDate + 
-            "\n preDiscountCharge=" + preDiscountCharge + 
-            "\n discountPercent=" + discountPercent + 
-            "\n discountAmount=" + discountAmount + 
-            "\n finalCharge=" + finalCharge + '}';
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    String date = sdf.format(new Date());
+    return "RentalAgreement{"
+            + "\n tool              =" + tool
+            + "\n rentalDays        =" + rentalDays
+            + "\n checkOutDate      =" + sdf.format(checkOutDate)
+            + "\n dueDate           =" + sdf.format(dueDate)
+            + "\n preDiscountCharge =" + formatCurrency(preDiscountCharge)
+            + "\n discountPercent   =" + discountPercent
+            + "\n discountAmount    =" + discountAmount
+            + "\n finalCharge       =" + formatCurrency(finalCharge) 
+            + "\n}";
   }
 
-
+  /**
+   * Format pennies as dollar amount.  Use standard local protocol in case we 
+   * are not in USA. 
+   * @param pennies
+   * @return 
+   */
+  private String formatCurrency(long pennies) {
+    Locale usa = new Locale("en", "US");
+    Currency dollars = Currency.getInstance(usa);
+    NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(usa);
+    return dollarFormat.format( ((double) pennies) / 100);
+  }
 }

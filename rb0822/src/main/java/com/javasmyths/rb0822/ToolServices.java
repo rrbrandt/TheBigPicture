@@ -30,6 +30,7 @@ public class ToolServices {
     rentalAgreement.setDiscountPercent(discountPercentage);
     rentalAgreement.setDueDate(new Date(checkOutDate.getTime() + (24 * 60 * 60 * 1000 * dayCount)));
     rentalAgreement.setFinalCharge(tool.getDailyCharge() * calculateChargeDays(toolCode, checkOutDate, dayCount));
+    rentalAgreement.setDiscountAmount((long)((double)rentalAgreement.getFinalCharge() * ((double)rentalAgreement.getDiscountPercent() / 100.0) + 0.005) );
     return rentalAgreement;
   }
 

@@ -29,11 +29,33 @@
       <constructor-arg index="6" value="false"/>
     </bean>
     
+    <bean id="jackhammerRidged" class="com.javasmyths.rb0822.model.Tool">
+      <constructor-arg index="0" value="JAKD"/>
+      <constructor-arg index="1" value="Jackhammer"/>
+      <constructor-arg index="2" value="Ridged"/>
+      <constructor-arg index="3" value="299"/>
+      <constructor-arg index="4" value="true"/>
+      <constructor-arg index="5" value="false"/>
+      <constructor-arg index="6" value="false"/>
+    </bean>
+    
+    <bean id="jackhammerDeWalt" class="com.javasmyths.rb0822.model.Tool">
+      <constructor-arg index="0" value="JAKR"/>
+      <constructor-arg index="1" value="Jackhammer"/>
+      <constructor-arg index="2" value="DeWalt"/>
+      <constructor-arg index="3" value="299"/>
+      <constructor-arg index="4" value="true"/>
+      <constructor-arg index="5" value="false"/>
+      <constructor-arg index="6" value="false"/>
+    </bean>
+    
     <bean id="config" class="com.javasmyths.rb0822.model.ApplicationConfig" scope="singleton">
       <property name="tools"> 
         <map>
           <entry key="CHNS" value-ref="chainsawStihl"/>
           <entry key="LADW" value-ref="ladderWarner"/>
+          <entry key="JAKR" value-ref="jackhammerRidged"/>
+          <entry key="JAKD" value-ref="jackhammerDeWalt"/>
         </map>
       </property>
     </bean>
