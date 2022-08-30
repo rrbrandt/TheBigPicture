@@ -3,9 +3,12 @@
  */
 package com.javasmyths.rb0822;
 
+import com.javasmyths.rb0822.exceptions.InvalidDiscount;
+import com.javasmyths.rb0822.exceptions.InvalidRentalDays;
 import com.javasmyths.rb0822.model.ApplicationConfig;
 import com.javasmyths.rb0822.model.RentalAgreement;
 import com.javasmyths.rb0822.model.Tool;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +25,25 @@ public class ToolServices {
   public ToolServices() {
   }
 
-  public RentalAgreement rentTool(String toolCode, long dayCount, long discountPercentage, Date checkOutDate) {
+  /**
+   * @param toolCode
+   * @param dayCount
+   * @param discountPercentage
+   * @param checkOutDate
+   * @return a valid rental agreement. 
+   * @throws InvalidDiscount 
+   * @throws com.javasmyths.rb0822.exceptions.InvalidRentalDays 
+   */
+  public RentalAgreement rentTool(String toolCode, long dayCount, long discountPercentage, Date checkOutDate) throws InvalidDiscount, InvalidRentalDays   {
     Tool tool = applicationConfig.tools.get(toolCode);
     RentalAgreement rentalAgreement = new RentalAgreement(applicationConfig.tools.get(toolCode));
-    rentalAgreement.setRentalDays(dayCount);
+    rentalAgreement.setRentalDays(filterDayCount(dayCount));
     rentalAgreement.setCheckOutDate(checkOutDate);
-    rentalAgreement.setDiscountPercent(discountPercentage);
+    rentalAgreement.setDiscountPercent(filterDiscountRate(discountPercentage));
     rentalAgreement.setDueDate(new Date(checkOutDate.getTime() + (24 * 60 * 60 * 1000 * dayCount)));
-    rentalAgreement.setFinalCharge(tool.getDailyCharge() * calculateChargeDays(toolCode, checkOutDate, dayCount));
-    rentalAgreement.setDiscountAmount((long)((double)rentalAgreement.getFinalCharge() * ((double)rentalAgreement.getDiscountPercent() / 100.0) + 0.005) );
+    rentalAgreement.setPreDiscountCharge(tool.getDailyCharge() * calculateChargeDays(toolCode, checkOutDate, dayCount));
+    rentalAgreement.setDiscountAmount((long)((double)rentalAgreement.getPreDiscountCharge() * ((double)rentalAgreement.getDiscountPercent() / 100.0) + 0.005) );
+    rentalAgreement.setFinalCharge(rentalAgreement.getPreDiscountCharge() - rentalAgreement.getDiscountAmount());
     return rentalAgreement;
   }
 
@@ -39,6 +52,12 @@ public class ToolServices {
     return applicationConfig.getTools().toString();
   }
 
+  /**
+   * @param toolCode
+   * @param checkOutDate
+   * @param daysToRent
+   * @return the number of days that a tool rental agreement is charged for, some tools you do not have to pay for holidays or weekends.
+   */
   public long calculateChargeDays(String toolCode, Date checkOutDate, long daysToRent) {
     long rentalChargeDays = 0;
     Tool tool = applicationConfig.tools.get(toolCode);
@@ -48,26 +67,33 @@ public class ToolServices {
     endCal.setTime(checkOutDate);
     endCal.add(Calendar.DATE, (int) daysToRent);
 
-    while (startCal.getTimeInMillis() <= endCal.getTimeInMillis()) {
+    while (startCal.getTimeInMillis() < endCal.getTimeInMillis()) {
       startCal.add(Calendar.DAY_OF_MONTH, 1);
 
       if (isHoliday(startCal)) {
-        if (!tool.isHolidayCharge()) {
+        if (tool.isHolidayCharge()) {
           rentalChargeDays++;
         }
       } else {
         if (startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY && startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-          if (!tool.isWeekendCharge()) {
+          if (tool.isWeekdayCharge()) {
+            rentalChargeDays++;
+          }
+        } else {
+          if (tool.isWeekendCharge()) {
             rentalChargeDays++;
           }
         }
       }
     }
 
-    System.out.println("Rental Charge Days = " + rentalChargeDays);
     return rentalChargeDays;
   }
 
+  /**
+   * @param cal
+   * @return true if calendar date is a defined holiday.
+   */
   public boolean isHoliday(Calendar cal) {
     boolean isHoliday = false;
 
@@ -89,6 +115,32 @@ public class ToolServices {
     }
     
     return isHoliday;
+  }
+
+  /**
+   * Filter discountPercentage and throw custom exception.
+   * @param discountPercentage
+   * @return 1-100 if valid
+   * @throws InvalidDiscount 
+   */
+  private long filterDiscountRate(long discountPercentage) throws InvalidDiscount {
+    if (discountPercentage < 0 || discountPercentage > 100) {
+      throw new InvalidDiscount();
+    }
+    
+    return discountPercentage;
+  }
+
+  /**
+   * @param dayCount
+   * @return day count if greater then 0.  Other wise throw exception.
+   */
+  private long filterDayCount(long dayCount) throws InvalidRentalDays {
+    if (dayCount <= 0 ) {
+      throw new InvalidRentalDays();
+    }
+    
+    return dayCount;
   }
 
 }

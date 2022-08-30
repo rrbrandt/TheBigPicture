@@ -4,8 +4,12 @@
 
 package com.javasmyths.rb0822;
 
+import com.javasmyths.rb0822.exceptions.InvalidDiscount;
+import com.javasmyths.rb0822.exceptions.InvalidRentalDays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
@@ -13,7 +17,7 @@ import org.springframework.stereotype.Component;
 /**
  * Set up the singleton container with the tools for testing.
  * 
- * A few assumtions: 
+ * A few assumptions: 
  * 
  * @author Richard
  */
@@ -30,6 +34,12 @@ public class Rb0822 {
       System.out.println("Rent a tool");
       Calendar calendar = Calendar.getInstance();
       calendar.set(2015, 9, 3);
-      System.out.println("" + toolServices.rentTool("JAKR", 5, 101, new Date(calendar.getTimeInMillis())));
+      try {
+        System.out.println("" + toolServices.rentTool("JAKR", 5, 101, new Date(calendar.getTimeInMillis())));
+      } catch (InvalidDiscount ex) {
+        Logger.getLogger(Rb0822.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (InvalidRentalDays ex) {
+        Logger.getLogger(Rb0822.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
 }

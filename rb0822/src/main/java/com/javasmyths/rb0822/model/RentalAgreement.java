@@ -13,7 +13,7 @@ import java.util.Locale;
  *
  * @author Richard
  */
-public class RentalAgreement {
+public class RentalAgreement extends GsonString {
 
   private Tool tool;
   private long rentalDays;
@@ -100,13 +100,17 @@ public class RentalAgreement {
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     String date = sdf.format(new Date());
     return "RentalAgreement{"
-            + "\n tool              =" + tool
+            + "\n toolType          =" + tool.getType()
+            + "\n toolCode          =" + tool.getCode()
+            + "\n toolBrand         =" + tool.getBrand()
+            + "\n dailyCharge       =" + formatCurrency(tool.getDailyCharge())
+            + "\n"
             + "\n rentalDays        =" + rentalDays
             + "\n checkOutDate      =" + sdf.format(checkOutDate)
             + "\n dueDate           =" + sdf.format(dueDate)
             + "\n preDiscountCharge =" + formatCurrency(preDiscountCharge)
             + "\n discountPercent   =" + discountPercent
-            + "\n discountAmount    =" + discountAmount
+            + "\n discountAmount    =" + formatCurrency(discountAmount)
             + "\n finalCharge       =" + formatCurrency(finalCharge) 
             + "\n}";
   }

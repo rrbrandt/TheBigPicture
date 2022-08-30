@@ -4,7 +4,7 @@
 package com.javasmyths.rb0822.model;
 
 /**
- *  Cardinal code example.  Model for tool rental.
+ * Cardinal code example.  Model for tool rental.
  * @author Richard
  */
 public class Tool extends GsonString {
@@ -87,6 +87,4 @@ public class Tool extends GsonString {
   public String toString() {
     return toGsonString();
   }
-
-    
 }
