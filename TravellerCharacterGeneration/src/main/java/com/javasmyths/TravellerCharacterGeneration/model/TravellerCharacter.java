@@ -14,8 +14,6 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * @author Richard
  */
-@Component
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class TravellerCharacter {
   
   private String Name;

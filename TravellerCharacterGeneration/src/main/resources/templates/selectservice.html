@@ -58,6 +58,7 @@
       <input type="submit" name="attempt" value="attempt" class="buttons" th:hidden="${attemptButton eq 'hidden'}" /> <br>
       <p th:utext="${result}"/>
       <input type="submit" name="continue" value="continue" class="buttons" th:hidden="${continueButton eq 'hidden'}"/>
+      <input type="text" th:field="*{service}" th:hidden="hidden"/>
     </form>
   </body>
 </html>

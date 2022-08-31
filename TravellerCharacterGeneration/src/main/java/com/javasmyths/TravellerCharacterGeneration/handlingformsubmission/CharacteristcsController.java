@@ -13,26 +13,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class CharacteristcsController {
-  @Resource(name = "TravellerCharacter")
-  TravellerCharacter travellerCharacter;
 
   @GetMapping("/characteristics")
   public String greetingForm(@ModelAttribute TravellerCharacter character, Model model) {
     System.out.println("****************************************");
-    System.out.println("characteristics - get");
+    System.out.println("CharacteristcsController - get");
     System.out.println("****************************************");
-    System.out.println("Character: " + travellerCharacter);
-    travellerCharacter.setCharacteristics(new Characteristics());
-    model.addAttribute("character", travellerCharacter);
+    System.out.println("Character: " + character);
+    character.setCharacteristics(new Characteristics());
+    model.addAttribute("character", character);
     return "characteristics";
   }
 
   @PostMapping("/characteristics")
   public String greetingSubmit(@ModelAttribute TravellerCharacter character, Model model) {
     System.out.println("****************************************");
-    System.out.println("characteristics - post");
+    System.out.println("CharacteristcsController - post");
     System.out.println("****************************************");
-    System.out.println("Character: " + travellerCharacter);
+    model.addAttribute("character", character);
+    System.out.println("Character: " + character);
     model.addAttribute("acceptButton", "display");
     model.addAttribute("attemptButton", "display");
     model.addAttribute("continueButton", "hidden");
@@ -42,10 +41,11 @@ public class CharacteristcsController {
   @RequestMapping(value = "/characteristics", method = RequestMethod.POST, params = "ReRoll")
   public String reroll(@ModelAttribute TravellerCharacter character, Model model) {
     System.out.println("****************************************");
-    System.out.println("characteristics - ReRoll");
+    System.out.println("CharacteristcsController - ReRoll");
     System.out.println("****************************************");
+    model.addAttribute("character", character);
     Characteristics characteristics = new Characteristics();
-    travellerCharacter.setCharacteristics(characteristics);
+    character.setCharacteristics(characteristics);
     System.out.println("Character: " + character);
     return "characteristics";
   }

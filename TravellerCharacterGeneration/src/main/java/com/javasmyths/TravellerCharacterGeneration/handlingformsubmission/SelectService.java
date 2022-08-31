@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SelectService {
-
+  
   Dice dice = new Dice();
-
+  
   @GetMapping("/selectservice")
   public String greetingForm(@ModelAttribute TravellerCharacter character, Model model) {
     System.out.println("****************************************");
@@ -32,12 +32,13 @@ public class SelectService {
     System.out.println("Character: " + model.getAttribute("character"));
     return "selectservice";
   }
-
+  
   @PostMapping("/selectservice")
   public String greetingSubmit(@ModelAttribute TravellerCharacter character, Model model) {
     System.out.println("****************************************");
     System.out.println("selectservice - post");
     System.out.println("****************************************");
+    model.addAttribute("character", character);
     System.out.println("Character: " + character);
     List<Skills> skills = new ArrayList();
     
@@ -45,29 +46,33 @@ public class SelectService {
     SkillsForService skillsForService = serviceSkills.getSkillsForService().get(character.getService());
     
     for (int i = 0; i < 6; i++) {
-      skills.add(new Skills(String.valueOf(i), 
-              (skillsForService.getPersonalDevelopment())[i].toString(),  
+      skills.add(new Skills(String.valueOf(i),
+              (skillsForService.getPersonalDevelopment())[i].toString(),
               (skillsForService.getServiceSkills())[i].toString(),
               (skillsForService.getAdvancedEducation())[i].toString(),
               (skillsForService.getAdvancedEducationPlusEduc())[i].toString())
       );
+      
+      System.out.println("Skills[" + i + "] = " + skills.get(i));
     }
     model.addAttribute("skills", skills);
     model.addAttribute("acceptButton", "hidden");
     model.addAttribute("attemptButton", "display");
     model.addAttribute("continueButton", "hidden");
+    model.addAttribute("character", character);
     return "selectskills";
   }
-
+  
   @RequestMapping(value = "/selectservice", method = RequestMethod.POST, params = "attempt")
   public String reroll(@ModelAttribute TravellerCharacter character, Model model,
           @RequestParam("selectService") String selectService) {
+    model.addAttribute("character", character);
     System.out.println("****************************************");
     System.out.println("selectservice - attempt   selectService = " + selectService);
     System.out.println("****************************************");
     System.out.println("Character: " + character);
     Service service = Service.valueOf(selectService);
-
+    
     System.out.println("Attemting " + service);
     int success = 0;
     switch (service) {
@@ -100,10 +105,10 @@ public class SelectService {
         success -= (character.getCharacteristics().getStrength() >= 8) ? 2 : 0;
         break;
     }
-
+    
     StringBuilder sb = new StringBuilder("Your chance to enter the " + service + " is " + success + " on 2D6 \n <br />");
     int diceRole = dice.role2Dice();
-
+    
     if (diceRole >= success) {
       sb.append("Your rolled a ").append(diceRole).append(".  You made it! you are now in the ").append(service);
     } else {
@@ -115,14 +120,14 @@ public class SelectService {
     model.addAttribute("result", sb.toString());
     System.out.println(sb);
     character.setService(service);
-
+    
     model.addAttribute("acceptButton", "hidden");
     model.addAttribute("attemptButton", "hidden");
     model.addAttribute("continueButton", "display");
-
+    
     model.addAttribute("character", character);
     System.out.println("Character: " + character);
     return "selectservice";
   }
-
+  
 }
